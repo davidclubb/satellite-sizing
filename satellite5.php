@@ -97,6 +97,18 @@ ul {
   width: 100%;
 }
 
+@media print {
+  .container {
+    width: 670px;
+  }
+  .col-sm-6 {
+    float: left;
+  }
+  .col-sm-6 {
+    width: 90%;
+  }
+}
+
 @media only screen and (max-device-width: 480px) {
   .container {
     width: 460px;
