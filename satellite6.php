@@ -353,7 +353,7 @@ function calculate_cache_sizing()
     var cache_sizing_size_per_channel = 2;
 
     // Capture the entered values of two input boxes
-    var cache_sizing_num_channels = parseInt(document.getElementById('cache_sizing_num_channels').value);
+    var cache_sizing_num_channels = parseInt(document.getElementById('content_sizing_num_channels').value);
 
     // Calculate our disk space requirements and display
     var cache_sizing_requirement = cache_sizing_num_channels * cache_sizing_size_per_channel;
@@ -532,12 +532,6 @@ window.onload = function () {
                   <li>/var/cache/rhn (for Satellite Servers)</li>
                   <li>/var/spool/squid (for Satellite Proxies)</li>
                 </ul>
-
-               <h3>Calculate</h3>
-               <table>
-                  <tr><td>Number of Channels</td><td><input type="text" id="cache_sizing_num_channels" name="cache_sizing_num_channels" value="5" /></td></tr>
-                  <tr><td></td><td align="center"><input type="button" name="Calculate" value="Calculate" onclick="calculate();" /></td></tr>
-                </table>
 
                 <h3>Notes</h3>
                 <ul>
