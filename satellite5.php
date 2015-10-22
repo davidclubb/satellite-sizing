@@ -469,8 +469,7 @@ window.onload = function () {
 
                 <h3>Notes</h3>
                 <ul>
-                  <li>Recommended: Solid State Drive (SSD)</li>
-                  <li>If not, Strongly Recommended: A SCSI drive connected to a level 5 RAID.</li>
+                  <li>Recommended: Solid State Drive (SSD) or alternatively a SCSI drive connected to a level 5 RAID.</li>
                   <li>Ensure block sizes are a minimum of 8 KB for Red Hat Satellite to install properly.</li>
                   <li>Ensure the database partition contains an amount of free space equal to the tablespace size.</li>
                 </ul>
@@ -482,6 +481,8 @@ window.onload = function () {
               <h2>Content Sizing</h2>
 
                 <p>This calculates the space required for content, such as packages and configurations [<a href="https://access.redhat.com/documentation/en-US/Red_Hat_Satellite/5.7/html/Installation_Guide/sect-Hardware_Requirements.html">1</a>][<a href="https://access.redhat.com/documentation/en-US/Red_Hat_Satellite/5.7/html/Proxy_Installation_Guide/sect-Hardware_Requirements.html">2</a>].  <i>This is required for Satellite Servers and Proxies.</i></p>
+
+                <p>Channel size estimates assume all layered products are managed; actual usage will vary upon desired channels and architectures.  Backup of this content is optional, but recommended to reduce rebuild times due to download speeds.</p>
 
                 <h3>Assumptions</h3>
                 <ul>
