@@ -15,26 +15,28 @@
 
     #rhel4_selectable .ui-selecting { background: #FECA40; }
     #rhel4_selectable .ui-selected { background: #F39814; color: white; }
-    #rhel4_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel4_selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
     #rhel4_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
 
     #rhel5_selectable .ui-selecting { background: #FECA40; }
     #rhel5_selectable .ui-selected { background: #F39814; color: white; }
-    #rhel5_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel5_selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
     #rhel5_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
 
     #rhel6_selectable .ui-selecting { background: #FECA40; }
     #rhel6_selectable .ui-selected { background: #F39814; color: white; }
-    #rhel6_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel6_selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
     #rhel6_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
 
     #rhel7_selectable .ui-selecting { background: #FECA40; }
     #rhel7_selectable .ui-selected { background: #F39814; color: white; }
-    #rhel7_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel7_selectable { list-style-type: none; margin: 0; padding: 0; width: 200px; }
     #rhel7_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
 
   </style>
   <script>
+  var version = 6;
+
   $(function() {
     $( "#progressbar" ).progressbar({
       value: 0
@@ -50,22 +52,23 @@
       width: 300,
       select: function( event, ui ) {
         var e = document.getElementById("satellite_version");
-        var version = parseInt(e.options[e.selectedIndex].value);
+        version = parseInt(e.options[e.selectedIndex].value);
         if ( version == 5 ) {
-          $( ".satellite_6", this ).each(function() {
+          $( ".satellite_6" ).each(function() {
             this.style.visibility = "hidden";
           });
-          $( ".satellite_5", this ).each(function() {
+          $( ".satellite_5" ).each(function() {
             this.style.visibility = "visible";
           });
         } else {
-          $( ".satellite_6", this ).each(function() {
+          $( ".satellite_6" ).each(function() {
             this.style.visibility = "visible";
           });
-          $( ".satellite_5", this ).each(function() {
+          $( ".satellite_5" ).each(function() {
             this.style.visibility = "hidden";
           });
         }
+        build_datacenters_fieldset();
       }
     });
     $( "#datacenters" ).spinner({
@@ -202,25 +205,27 @@
         datacenter_table_row.appendChild(datacenter_table_col);
         datacenter_table.appendChild(datacenter_table_row);
 
-        // || [Checkbox] | Enhanced reporting
-        datacenter_table_row = document.createElement("tr");
-        // column 1
-        datacenter_table_col = document.createElement("td");
-        datacenter_table_col.setAttribute('align', 'right');
-        var enhanced_reporting = document.createElement("input");
-        enhanced_reporting.setAttribute('id',datacenter_id + "_enhanced_reporting");
-        enhanced_reporting.setAttribute('name',datacenter_id + "_enhanced_reporting");
-        enhanced_reporting.setAttribute('type',"checkbox");
-        datacenter_table_col.appendChild(enhanced_reporting);
-        datacenter_table_row.appendChild(datacenter_table_col);
-        // column 2
-        datacenter_table_col = document.createElement("td");
-        var enhanced_reporting_label = document.createElement("label");
-        enhanced_reporting_label.setAttribute('for', datacenter_id + "_enhanced_reporting");
-        enhanced_reporting_label.innerHTML = "Enhanced reporting";
-        datacenter_table_col.appendChild(enhanced_reporting_label);
-        datacenter_table_row.appendChild(datacenter_table_col);
-        datacenter_table.appendChild(datacenter_table_row);
+        if ( version == 5 ) {
+          // || [Checkbox] | Enhanced reporting
+          datacenter_table_row = document.createElement("tr");
+          // column 1
+          datacenter_table_col = document.createElement("td");
+          datacenter_table_col.setAttribute('align', 'right');
+          var enhanced_reporting = document.createElement("input");
+          enhanced_reporting.setAttribute('id',datacenter_id + "_enhanced_reporting");
+          enhanced_reporting.setAttribute('name',datacenter_id + "_enhanced_reporting");
+          enhanced_reporting.setAttribute('type',"checkbox");
+          datacenter_table_col.appendChild(enhanced_reporting);
+          datacenter_table_row.appendChild(datacenter_table_col);
+          // column 2
+          datacenter_table_col = document.createElement("td");
+          var enhanced_reporting_label = document.createElement("label");
+          enhanced_reporting_label.setAttribute('for', datacenter_id + "_enhanced_reporting");
+          enhanced_reporting_label.innerHTML = "Enhanced reporting";
+          datacenter_table_col.appendChild(enhanced_reporting_label);
+          datacenter_table_row.appendChild(datacenter_table_col);
+          datacenter_table.appendChild(datacenter_table_row);
+        }
       } else {
         // || [Checkbox] | Disconnected from other datacenters
         datacenter_table_row = document.createElement("tr");
