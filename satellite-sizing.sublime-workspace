@@ -519,30 +519,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "index.php",
-			"settings":
-			{
-				"buffer_size": 36802,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "satellite5.php",
-			"settings":
-			{
-				"buffer_size": 52156,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "satellite6.php",
-			"settings":
-			{
-				"buffer_size": 52156,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -702,6 +678,9 @@
 	],
 	"file_history":
 	[
+		"/Users/jpreston/satellite-sizing/satellite6.php",
+		"/Users/jpreston/satellite-sizing/index.php",
+		"/Users/jpreston/satellite-sizing/satellite5.php",
 		"/Users/jpreston/Development/git/idm-quickstart/provision_client7_1.sh",
 		"/Users/jpreston/Development/git/idm-quickstart/provision_idm_2.sh",
 		"/Users/jpreston/Development/git/idm-quickstart/Vagrantfile",
@@ -826,10 +805,7 @@
 		"/Users/jpreston/Development/Private/git/jenkins/ssh/known_hosts",
 		"/Users/jpreston/Development/Private/git/puppet/r10k-control/site/profiles/manifests/legal.pp",
 		"/Users/jpreston/Development/Private/git/jenkins/Dockerfile",
-		"/Users/jpreston/Development/Private/git/puppet/r10k-control/site/profiles/files/iptables-blocks",
-		"/Users/jpreston/Development/Private/git/prestoncentral-gitolite-admin/conf/gitolite.conf",
-		"/Users/jpreston/Development/Private/git/prestoncentral-gitolite-admin/keydir/jenkins.prestoncentral.local/jenkins.pub",
-		"/Users/jpreston/Dropbox/Satellite Patching Qualifiers.txt"
+		"/Users/jpreston/Development/Private/git/puppet/r10k-control/site/profiles/files/iptables-blocks"
 	],
 	"find":
 	{
@@ -1123,96 +1099,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "index.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 36802,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								36579,
-								36579
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"syntax_mgr_loaded": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3259.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "satellite5.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 52156,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								34550,
-								34550
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"syntax_mgr_loaded": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1589.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "satellite6.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 52156,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								34550,
-								34427
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"syntax_mgr_loaded": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1425.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],

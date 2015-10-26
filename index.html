@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Satellite Sizing Calculator</title>
+  <script src="jquery-ui/external/jquery/jquery.js"></script>
+  <script src="jquery-ui/jquery-ui.js"></script>
+  <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
+  <link rel="stylesheet" href="jquery-ui/jquery-ui.structure.css">
+  <link rel="stylesheet" href="jquery-ui/jquery-ui.theme.css">
+  <style>
+    #datacenters {
+      width: 50px;
+    }
+
+    #rhel4_selectable .ui-selecting { background: #FECA40; }
+    #rhel4_selectable .ui-selected { background: #F39814; color: white; }
+    #rhel4_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel4_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #rhel5_selectable .ui-selecting { background: #FECA40; }
+    #rhel5_selectable .ui-selected { background: #F39814; color: white; }
+    #rhel5_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel5_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #rhel6_selectable .ui-selecting { background: #FECA40; }
+    #rhel6_selectable .ui-selected { background: #F39814; color: white; }
+    #rhel6_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel6_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+    #rhel7_selectable .ui-selecting { background: #FECA40; }
+    #rhel7_selectable .ui-selected { background: #F39814; color: white; }
+    #rhel7_selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #rhel7_selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+
+  </style>
+  <script>
+  $(function() {
+    $( "#progressbar" ).progressbar({
+      value: 0
+    });
+    $( "#accordion" ).accordion({
+      activate: function( event, ui ) {
+        $( "#progressbar" ).progressbar( "value", 10 );
+      },
+      heightStyle: "content"
+    });
+
+    $( "#satellite_version" ).selectmenu({
+      width: 300,
+      select: function( event, ui ) {
+        var e = document.getElementById("satellite_version");
+        var version = parseInt(e.options[e.selectedIndex].value);
+        if ( version == 5 ) {
+          $( ".satellite_6", this ).each(function() {
+            this.style.visibility = "hidden";
+          });
+          $( ".satellite_5", this ).each(function() {
+            this.style.visibility = "visible";
+          });
+        } else {
+          $( ".satellite_6", this ).each(function() {
+            this.style.visibility = "visible";
+          });
+          $( ".satellite_5", this ).each(function() {
+            this.style.visibility = "hidden";
+          });
+        }
+      }
+    });
+    $( "#datacenters" ).spinner({
+      create: function( event, ui ) {
+        build_datacenters_fieldset();
+      },
+      max: 24,
+      min: 1,
+      stop: function( event, ui ) {
+        build_datacenters_fieldset();
+      }
+    });
+
+    $( "#rhel4_selectable" ).selectable({
+      stop: function() {
+        var result = $( "#rhel4_selected" ).empty();
+        $( ".ui-selected", this ).each(function() {
+          result.append( this.innerHTML + " ");
+        });
+      }
+    });
+
+   $( "#rhel5_selectable" ).selectable({
+      stop: function() {
+        var result = $( "#rhel5_selected" ).empty();
+        $( ".ui-selected", this ).each(function() {
+          result.append( this.innerHTML + " ");
+        });
+      }
+    });
+
+   $( "#rhel6_selectable" ).selectable({
+      stop: function() {
+        var result = $( "#rhel6_selected" ).empty();
+        $( ".ui-selected", this ).each(function() {
+          result.append( this.innerHTML + " ");
+        });
+      }
+    });
+
+   $( "#rhel7_selectable" ).selectable({
+      stop: function() {
+        var result = $( "#rhel7_selected" ).empty();
+        $( ".ui-selected", this ).each(function() {
+          result.append( this.innerHTML + " ");
+        });
+      }
+    });
+
+  });
+
+  function build_datacenters_fieldset() {
+    // Get our number of datacenters
+    var numberOfDatacenters = $( "#datacenters" ).spinner( "value" );
+
+    var datacenters_fieldset = document.getElementById('datacenters_fieldset');
+    datacenters_fieldset.innerHTML = "";
+
+    var datacenter_num = 0;
+    while ( datacenter_num++ < numberOfDatacenters ) {
+      var datacenter_id = "datacenter_" + datacenter_num;
+      var fieldset = document.createElement("fieldset");
+
+      var datacenter_label = document.createElement("h4");
+      datacenter_label.innerHTML = "Datacenter " + datacenter_num;
+      fieldset.appendChild(datacenter_label);
+
+      if ( datacenter_num == 1 ) {
+        var datacenter_note = document.createElement("p");
+        datacenter_note.innerHTML = "This datacenter is your primary datacenter and acts as the main Satellite Server for your organization.";
+        fieldset.appendChild(datacenter_note);
+        fieldset.appendChild(document.createElement("br"));
+      }
+
+      var datacenter_table = document.createElement("table");
+
+      // || Name of Datacenter | [INPUT]
+      var datacenter_table_row = document.createElement("tr");
+      var datacenter_table_col = document.createElement("td");
+      // column 1
+      var datacenter_name_label = document.createElement("label");
+      datacenter_name_label.setAttribute('for', datacenter_id + "_name");
+      datacenter_name_label.innerHTML = "Name of Datacenter";
+      datacenter_table_col.appendChild(datacenter_name_label);
+      datacenter_table_row.appendChild(datacenter_table_col);
+      // column 2
+      datacenter_table_col = document.createElement("td");
+      var datacenter_name = document.createElement("input");
+      datacenter_name.setAttribute('id',datacenter_id + "_name");
+      datacenter_name.setAttribute('name',datacenter_id + "_name");
+      datacenter_name.setAttribute('value',"Datacenter " + datacenter_num);
+      datacenter_table_col.appendChild(datacenter_name);
+      datacenter_table_row.appendChild(datacenter_table_col);
+      datacenter_table.appendChild(datacenter_table_row);
+
+      // || Number of Clients | [INPUT]
+      datacenter_table_row = document.createElement("tr");
+      datacenter_table_col = document.createElement("td");
+      // Column 1
+      var clients_label = document.createElement("label");
+      clients_label.setAttribute('for', datacenter_id + "_clients");
+      clients_label.innerHTML = "Number of clients";
+      datacenter_table_col.appendChild(clients_label);
+      datacenter_table_row.appendChild(datacenter_table_col);
+      // Column 2
+      datacenter_table_col = document.createElement("td");
+      var clients = document.createElement("input");
+      clients.setAttribute('id',datacenter_id + "_clients");
+      clients.setAttribute('name',datacenter_id + "_clients");
+      clients.setAttribute('value',"500");
+      datacenter_table_col.appendChild(clients);
+      datacenter_table_row.appendChild(datacenter_table_col);
+      datacenter_table.appendChild(datacenter_table_row);
+
+      if ( datacenter_num == 1 ) {
+        // || [Checkbox] | Embedded Database
+        datacenter_table_row = document.createElement("tr");
+        // column 1
+        datacenter_table_col = document.createElement("td");
+        datacenter_table_col.setAttribute('align', 'right');
+        var embedded_database = document.createElement("input");
+        embedded_database.setAttribute('id',datacenter_id + "_embedded_database");
+        embedded_database.setAttribute('name',datacenter_id + "_embedded_database");
+        embedded_database.setAttribute('type',"checkbox");
+        embedded_database.setAttribute('checked', 'true');
+        datacenter_table_col.appendChild(embedded_database);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        // column 2
+        datacenter_table_col = document.createElement("td");
+        var embedded_database_label = document.createElement("label");
+        embedded_database_label.setAttribute('for', datacenter_id + "_embedded_database");
+        embedded_database_label.innerHTML = "Embedded Database";
+        datacenter_table_col.appendChild(embedded_database_label);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        datacenter_table.appendChild(datacenter_table_row);
+
+        // || [Checkbox] | Enhanced reporting
+        datacenter_table_row = document.createElement("tr");
+        // column 1
+        datacenter_table_col = document.createElement("td");
+        datacenter_table_col.setAttribute('align', 'right');
+        var enhanced_reporting = document.createElement("input");
+        enhanced_reporting.setAttribute('id',datacenter_id + "_enhanced_reporting");
+        enhanced_reporting.setAttribute('name',datacenter_id + "_enhanced_reporting");
+        enhanced_reporting.setAttribute('type',"checkbox");
+        datacenter_table_col.appendChild(enhanced_reporting);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        // column 2
+        datacenter_table_col = document.createElement("td");
+        var enhanced_reporting_label = document.createElement("label");
+        enhanced_reporting_label.setAttribute('for', datacenter_id + "_enhanced_reporting");
+        enhanced_reporting_label.innerHTML = "Enhanced reporting";
+        datacenter_table_col.appendChild(enhanced_reporting_label);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        datacenter_table.appendChild(datacenter_table_row);
+      } else {
+        // || [Checkbox] | Disconnected from other datacenters
+        datacenter_table_row = document.createElement("tr");
+        // column 1
+        datacenter_table_col = document.createElement("td");
+        datacenter_table_col.setAttribute('align', 'right');
+        var disconnected = document.createElement("input");
+        disconnected.setAttribute('id',datacenter_id + "_disconnected");
+        disconnected.setAttribute('name',datacenter_id + "_disconnected");
+        disconnected.setAttribute('type',"checkbox");
+        datacenter_table_col.appendChild(disconnected);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        // column2
+        datacenter_table_col = document.createElement("td");
+        var disconnected_label = document.createElement("label");
+        disconnected_label.setAttribute('for', datacenter_id + "_disconnected");
+        disconnected_label.innerHTML = "Disconnected from other datacenters";
+        datacenter_table_col.appendChild(disconnected_label);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        datacenter_table.appendChild(datacenter_table_row);
+
+        // || [Checkbox] | Precache all content
+        datacenter_table_row = document.createElement("tr");
+        // column 1
+        datacenter_table_col = document.createElement("td");
+        datacenter_table_col.setAttribute('align', 'right');
+        var precache = document.createElement("input");
+        precache.setAttribute('id',datacenter_id + "_precache");
+        precache.setAttribute('name',datacenter_id + "_precache");
+        precache.setAttribute('type',"checkbox");
+        precache.setAttribute('checked', 'true');
+        datacenter_table_col.appendChild(precache);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        // column 2
+        datacenter_table_col = document.createElement("td");
+        var precache_label = document.createElement("label");
+        precache_label.setAttribute('for', datacenter_id + "_precache");
+        precache_label.innerHTML = "Precache all content";
+        datacenter_table_col.appendChild(precache_label);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        datacenter_table.appendChild(datacenter_table_row);
+      }
+
+      fieldset.appendChild(datacenter_table);
+      datacenters_fieldset.appendChild(fieldset);
+
+      $( "#" + datacenter_id + "_clients" ).spinner({
+        max: 25000,
+        min: 50,
+        page: 250,
+        step: 50
+      });
+
+    }
+  }
+
+  </script>
+</head>
+<body>
+
+<h1>Welcome to the Satellite Sizing Calculator</h1>
+
+<div id="progressbar"></div>
+
+<div id="accordion">
+  <h3>1. Environment</h3>
+  <div>
+    <p>
+      Please provide some details about your environment.
+    </p>
+    <table>
+      <tr>
+        <td><label for="satellite_version">What version of Satellite?</label></td>
+        <td>
+          <select name="satellite_version" id="satellite_version">
+            <option value="5">Red Hat Network Satellite 5</option>
+            <option value="6" selected="selected">Red Hat Satellite 6</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="datacenters">How many datacenters do you have?</label></td>
+        <td><input id="datacenters" name="datacenters" value="2"></td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>2. Datacenters</h3>
+  <div>
+    <p>Let's examine your datacenters in a little more detail.</p>
+    <span id="datacenters_fieldset"></span>
+  </div>
+
+  <h3>3. Channels</h3>
+  <div>
+    <p>
+      Now we need to get an idea of the channels you will require for your installation.  Please select all applicable (CTRL+Click or Command+Click to select multiple).
+    </p>
+
+    <fieldset class="satellite_5">
+      <h4>RHEL 4</h4>
+      <p><span id="rhel4_selected">No</span> architectures specified.</p>
+      <ol id="rhel4_selectable">
+        <li class="ui-widget-content">x86</li>
+        <li class="ui-widget-content">x86_64</li>
+        <li class="ui-widget-content">powerpc</li>
+      </ol>
+    </fieldset>
+
+    <fieldset>
+      <h4>RHEL 5</h4>
+      <p><span id="rhel5_selected">No</span> architectures specified.</p>
+      <ol id="rhel5_selectable">
+        <li class="ui-widget-content">x86</li>
+        <li class="ui-widget-content">x86_64</li>
+        <li class="ui-widget-content">powerpc</li>
+      </ol>
+    </fieldset>
+
+    <fieldset>
+      <h4>RHEL 6</h4>
+      <p><span id="rhel6_selected">x86_64</span> architectures specified.</p>
+      <ol id="rhel6_selectable">
+        <li class="ui-widget-content">x86</li>
+        <li class="ui-widget-content ui-selected">x86_64</li>
+        <li class="ui-widget-content">powerpc</li>
+      </ol>
+    </fieldset>
+
+    <fieldset>
+      <h4>RHEL 7</h4>
+      <p><span id="rhel7_selected">x86_64</span> architectures specified.</p>
+      <ol id="rhel7_selectable">
+        <li class="ui-widget-content">x86</li>
+        <li class="ui-widget-content ui-selected">x86_64</li>
+        <li class="ui-widget-content satellite_6">x86_64 Atomic</li>
+        <li class="ui-widget-content">powerpc</li>
+      </ol>
+    </fieldset>
+  </div>
+
+  <h3 class="satellite_6">4. Puppet Modules</h3>
+  <div class="satellite_6">
+    <p>
+    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+    mauris vel est.
+    </p>
+    <table>
+      <tr>
+        <td align="right"><input type="checkbox" id="puppetenterprise" name="puppetenterprise"></td>
+        <td><label for="puppetenterprise">Use Puppet Enterprise?</label></td>
+      </tr>
+      <tr>
+        <td><label for="puppet_modules">How many Puppet Modules?</label></td>
+        <td><input id="puppet_modules" name="puppet_modules" value="50"></td>
+      </tr>
+    </table>
+  </div>
+
+  <h3 class="satellite_6">5. Docker Images</h3>
+  <div class="satellite_6">
+    <p>
+    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+    mauris vel est.
+    </p>
+    <p>
+    Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+    inceptos himenaeos.
+    </p>
+  </div>
+
+  <h3>Satellite Sizing Calcuation</h3>
+  <div>
+    <p>
+    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+    mauris vel est.
+    </p>
+    <p>
+    Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+    inceptos himenaeos.
+    </p>
+  </div>
+
+</div>
+
+
+</body>
+</html>

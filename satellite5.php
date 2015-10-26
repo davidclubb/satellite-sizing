@@ -17,6 +17,12 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
+.satellte_5 {
+  visibility: hidden;
+}
+.satellite_6 {
+  visibility: visible;
+}
 .logo {
   background-size: cover;
   height: 58px;
