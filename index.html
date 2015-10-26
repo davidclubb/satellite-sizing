@@ -41,6 +41,7 @@
     $( "#progressbar" ).progressbar({
       value: 0
     });
+
     $( "#accordion" ).accordion({
       activate: function( event, ui ) {
         $( "#progressbar" ).progressbar( "value", 10 );
@@ -51,23 +52,6 @@
     $( "#satellite_version" ).selectmenu({
       width: 300,
       select: function( event, ui ) {
-        var e = document.getElementById("satellite_version");
-        version = parseInt(e.options[e.selectedIndex].value);
-        if ( version == 5 ) {
-          $( ".satellite_6" ).each(function() {
-            this.style.visibility = "hidden";
-          });
-          $( ".satellite_5" ).each(function() {
-            this.style.visibility = "visible";
-          });
-        } else {
-          $( ".satellite_6" ).each(function() {
-            this.style.visibility = "visible";
-          });
-          $( ".satellite_5" ).each(function() {
-            this.style.visibility = "hidden";
-          });
-        }
         build_datacenters_fieldset();
       }
     });
@@ -119,6 +103,26 @@
     });
 
   });
+
+  function toggle_features() {
+    var e = document.getElementById("satellite_version");
+    var version = parseInt(e.options[e.selectedIndex].value);
+    if ( version == 5 ) {
+      $( ".satellite_6" ).each(function() {
+        this.style.display = "none";
+      });
+      $( ".satellite_5" ).each(function() {
+        this.style.display = "block";
+      });
+    } else {
+      $( ".satellite_6" ).each(function() {
+        this.style.display = "block";
+      });
+      $( ".satellite_5" ).each(function() {
+        this.style.display = "none";
+      });
+    }
+  }
 
   function build_datacenters_fieldset() {
     // Get our number of datacenters
@@ -205,27 +209,28 @@
         datacenter_table_row.appendChild(datacenter_table_col);
         datacenter_table.appendChild(datacenter_table_row);
 
-        if ( version == 5 ) {
-          // || [Checkbox] | Enhanced reporting
-          datacenter_table_row = document.createElement("tr");
-          // column 1
-          datacenter_table_col = document.createElement("td");
-          datacenter_table_col.setAttribute('align', 'right');
-          var enhanced_reporting = document.createElement("input");
-          enhanced_reporting.setAttribute('id',datacenter_id + "_enhanced_reporting");
-          enhanced_reporting.setAttribute('name',datacenter_id + "_enhanced_reporting");
-          enhanced_reporting.setAttribute('type',"checkbox");
-          datacenter_table_col.appendChild(enhanced_reporting);
-          datacenter_table_row.appendChild(datacenter_table_col);
-          // column 2
-          datacenter_table_col = document.createElement("td");
-          var enhanced_reporting_label = document.createElement("label");
-          enhanced_reporting_label.setAttribute('for', datacenter_id + "_enhanced_reporting");
-          enhanced_reporting_label.innerHTML = "Enhanced reporting";
-          datacenter_table_col.appendChild(enhanced_reporting_label);
-          datacenter_table_row.appendChild(datacenter_table_col);
-          datacenter_table.appendChild(datacenter_table_row);
-        }
+        // || [Checkbox] | Enhanced reporting
+        datacenter_table_row = document.createElement("tr");
+        // column 1
+        datacenter_table_col = document.createElement("td");
+        datacenter_table_col.setAttribute('align', 'right');
+        var enhanced_reporting = document.createElement("input");
+        enhanced_reporting.setAttribute('id',datacenter_id + "_enhanced_reporting");
+        enhanced_reporting.setAttribute('name',datacenter_id + "_enhanced_reporting");
+        enhanced_reporting.setAttribute('type',"checkbox");
+        enhanced_reporting.setAttribute('class', 'satellite_5');
+        datacenter_table_col.appendChild(enhanced_reporting);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        // column 2
+        datacenter_table_col = document.createElement("td");
+        var enhanced_reporting_label = document.createElement("label");
+        enhanced_reporting_label.setAttribute('for', datacenter_id + "_enhanced_reporting");
+        enhanced_reporting_label.setAttribute('class', 'satellite_5');
+        enhanced_reporting_label.innerHTML = "Enhanced reporting";
+        datacenter_table_col.appendChild(enhanced_reporting_label);
+        datacenter_table_row.appendChild(datacenter_table_col);
+        datacenter_table.appendChild(datacenter_table_row);
+
       } else {
         // || [Checkbox] | Disconnected from other datacenters
         datacenter_table_row = document.createElement("tr");
@@ -271,6 +276,8 @@
 
       fieldset.appendChild(datacenter_table);
       datacenters_fieldset.appendChild(fieldset);
+
+      toggle_features();
 
       $( "#" + datacenter_id + "_clients" ).spinner({
         max: 25000,
@@ -367,39 +374,55 @@
     </fieldset>
   </div>
 
-  <h3 class="satellite_6">4. Puppet Modules</h3>
-  <div class="satellite_6">
-    <p>
-    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-    mauris vel est.
-    </p>
-    <table>
-      <tr>
-        <td align="right"><input type="checkbox" id="puppetenterprise" name="puppetenterprise"></td>
-        <td><label for="puppetenterprise">Use Puppet Enterprise?</label></td>
-      </tr>
-      <tr>
-        <td><label for="puppet_modules">How many Puppet Modules?</label></td>
-        <td><input id="puppet_modules" name="puppet_modules" value="50"></td>
-      </tr>
-    </table>
+  <h3>4. Puppet Modules</h3>
+  <div>
+    <div class="satellite_5">
+      <p>
+        Satellite 5 does not have Puppet support.  You will need Red Hat Satellite
+        6 in order to manage Puppet modules.
+      </p>
+    </div>
+    <div class="satellite_6">
+      <p>
+      Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+      et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+      faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+      mauris vel est.
+      </p>
+      <table>
+        <tr>
+          <td align="right"><input type="checkbox" id="puppetenterprise" name="puppetenterprise"></td>
+          <td><label for="puppetenterprise">Use Puppet Enterprise?</label></td>
+        </tr>
+        <tr>
+          <td><label for="puppet_modules">How many Puppet Modules?</label></td>
+          <td><input id="puppet_modules" name="puppet_modules" value="50"></td>
+        </tr>
+      </table>
+    </div>
   </div>
 
-  <h3 class="satellite_6">5. Docker Images</h3>
-  <div class="satellite_6">
-    <p>
-    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-    mauris vel est.
-    </p>
-    <p>
-    Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos.
-    </p>
+  <h3>5. Docker Images</h3>
+  <div>
+    <div class="satellite_5">
+      <p>
+        Satellite 5 does not have Docker registry support.  You will need Red Hat
+        Satellite 6 in order to manage Docker images.
+      </p>
+    </div>
+    <div class="satellite_6">
+      <p>
+      Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+      et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+      faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+      mauris vel est.
+      </p>
+      <p>
+      Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+      Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+      inceptos himenaeos.
+      </p>
+    </div>
   </div>
 
   <h3>Satellite Sizing Calcuation</h3>
