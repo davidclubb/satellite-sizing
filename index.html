@@ -66,42 +66,6 @@
       }
     });
 
-    $( "#rhel4_selectable" ).selectable({
-      stop: function() {
-        var result = $( "#rhel4_selected" ).empty();
-        $( ".ui-selected", this ).each(function() {
-          result.append( this.innerHTML + " ");
-        });
-      }
-    });
-
-   $( "#rhel5_selectable" ).selectable({
-      stop: function() {
-        var result = $( "#rhel5_selected" ).empty();
-        $( ".ui-selected", this ).each(function() {
-          result.append( this.innerHTML + " ");
-        });
-      }
-    });
-
-   $( "#rhel6_selectable" ).selectable({
-      stop: function() {
-        var result = $( "#rhel6_selected" ).empty();
-        $( ".ui-selected", this ).each(function() {
-          result.append( this.innerHTML + " ");
-        });
-      }
-    });
-
-   $( "#rhel7_selectable" ).selectable({
-      stop: function() {
-        var result = $( "#rhel7_selected" ).empty();
-        $( ".ui-selected", this ).each(function() {
-          result.append( this.innerHTML + " ");
-        });
-      }
-    });
-
   });
 
   function toggle_features() {
@@ -333,44 +297,79 @@
     </p>
 
     <fieldset class="satellite_5">
-      <h4>RHEL 4</h4>
-      <p><span id="rhel4_selected">No</span> architectures specified.</p>
-      <ol id="rhel4_selectable">
-        <li class="ui-widget-content">x86</li>
-        <li class="ui-widget-content">x86_64</li>
-        <li class="ui-widget-content">powerpc</li>
-      </ol>
+      <h4>Red Hat Enterprise Linux v4</h4>
+      <table>
+        <tr>
+          <td><input id="rhel4_x86" name="rhel4_x86" type="checkbox"></td>
+          <td><label for="rhel4_x86">x86</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel4_x86_64" name="rhel4_x86_64" type="checkbox"></td>
+          <td><label for="rhel4_x86_64">x86_64</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel4_ppc" name="rhel4_ppc" type="checkbox"></td>
+          <td><label for="rhel4_ppc">PowerPC</label></td>
+        </tr>
+      </table>
     </fieldset>
 
     <fieldset>
-      <h4>RHEL 5</h4>
-      <p><span id="rhel5_selected">No</span> architectures specified.</p>
-      <ol id="rhel5_selectable">
-        <li class="ui-widget-content">x86</li>
-        <li class="ui-widget-content">x86_64</li>
-        <li class="ui-widget-content">powerpc</li>
-      </ol>
+      <h4>Red Hat Enterprise Linux v5</h4>
+      <table>
+        <tr>
+          <td><input id="rhel5_x86" name="rhel5_x86" type="checkbox"></td>
+          <td><label for="rhel5_x86">x86</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel5_x86_64" name="rhel5_x86_64" type="checkbox"></td>
+          <td><label for="rhel5_x86_64">x86_64</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel5_ppc" name="rhel5_ppc" type="checkbox"></td>
+          <td><label for="rhel5_ppc">PowerPC</label></td>
+        </tr>
+      </table>
     </fieldset>
 
     <fieldset>
-      <h4>RHEL 6</h4>
-      <p><span id="rhel6_selected">x86_64</span> architectures specified.</p>
-      <ol id="rhel6_selectable">
-        <li class="ui-widget-content">x86</li>
-        <li class="ui-widget-content ui-selected">x86_64</li>
-        <li class="ui-widget-content">powerpc</li>
-      </ol>
+      <h4>Red Hat Enterprise Linux v6</h4>
+      <table>
+        <tr>
+          <td><input id="rhel6_x86" name="rhel6_x86" type="checkbox"></td>
+          <td><label for="rhel6_x86">x86</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel6_x86_64" name="rhel6_x86_64" checked="true" type="checkbox"></td>
+          <td><label for="rhel6_x86_64">x86_64</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel6_ppc" name="rhel6_ppc" type="checkbox"></td>
+          <td><label for="rhel6_ppc">PowerPC</label></td>
+        </tr>
+      </table>
     </fieldset>
 
     <fieldset>
-      <h4>RHEL 7</h4>
-      <p><span id="rhel7_selected">x86_64</span> architectures specified.</p>
-      <ol id="rhel7_selectable">
-        <li class="ui-widget-content">x86</li>
-        <li class="ui-widget-content ui-selected">x86_64</li>
-        <li class="ui-widget-content satellite_6">x86_64 Atomic</li>
-        <li class="ui-widget-content">powerpc</li>
-      </ol>
+      <h4>Red Hat Enterprise Linux v7</h4>
+      <table>
+        <tr>
+          <td><input id="rhel7_x86" name="rhel7_x86" type="checkbox"></td>
+          <td><label for="rhel7_x86">x86</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel7_x86_64" name="rhel7_x86_64" checked="true" type="checkbox"></td>
+          <td><label for="rhel7_x86_64">x86_64</label></td>
+        </tr>
+        <tr>
+          <td><input class="satellite_6" id="rhel7_x86_64_atomic" name="rhel7_x86_64_atomic" type="checkbox"></td>
+          <td><label class="satellite_6" for="rhel7_x86_64_atomic">x86_64 Atomic</label></td>
+        </tr>
+        <tr>
+          <td><input id="rhel7_ppc" name="rhel7_ppc" type="checkbox"></td>
+          <td><label for="rhel7_ppc">PowerPC</label></td>
+        </tr>
+      </table>
     </fieldset>
   </div>
 
